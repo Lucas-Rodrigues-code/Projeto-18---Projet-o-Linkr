@@ -33,7 +33,6 @@ export async function unlikePost(req, res){
         await connection.query('UPDATE posts SET "likeQtd" = $1 WHERE posts.id = $2', [likeQtd, postId]);
 
         await connection.query('delete from likes where likes."userId" = $1 and likes."postId" = $2', [userId, postId]); 
-import connection from "../database/db";
         
 
         const likes = await connection.query(`SELECT likes.*, users.name as username from likes join users on likes."userId" = users.id  WHERE likes."postId" = $1`, [postId]);
