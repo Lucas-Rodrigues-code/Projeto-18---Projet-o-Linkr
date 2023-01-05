@@ -15,10 +15,9 @@ CREATE TABLE "trends" (
 
 CREATE TABLE "posts" (
 	"id" serial PRIMARY KEY,
-	"userId" integer NOT NULL UNIQUE,
+	"userId" integer NOT NULL,
 	"link" TEXT NOT NULL UNIQUE,
 	"description" TEXT NOT NULL,
-	"likeId" INTEGER NOT NULL,
 	"createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
