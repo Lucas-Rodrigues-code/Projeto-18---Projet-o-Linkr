@@ -18,6 +18,7 @@ CREATE TABLE "posts" (
 	"userId" integer NOT NULL,
 	"link" TEXT NOT NULL UNIQUE,
 	"description" TEXT NOT NULL,
+	"likeQtd" integer DEFAULT 0 not null,
 	"createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
@@ -30,7 +31,7 @@ CREATE TABLE "sessions" (
 
 CREATE TABLE "likes" (
 	"id" serial PRIMARY KEY,
-	"userId" integer NOT NULL UNIQUE,
+	"userId" integer NOT NULL,
 	"postId" integer NOT NULL,
 	"createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
