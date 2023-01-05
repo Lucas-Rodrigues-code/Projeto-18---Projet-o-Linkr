@@ -34,6 +34,7 @@ export async function unlikePost(req, res){
 
         await connection.query('delete from likes where likes."userId" = $1 and likes."postId" = $2', [userId, postId]); 
         
+
         const likes = await connection.query(`SELECT likes.*, users.name as username from likes join users on likes."userId" = users.id  WHERE likes."postId" = $1`, [postId]);
 
         res.send(likes.rows)
@@ -41,4 +42,20 @@ export async function unlikePost(req, res){
         console.log(error);
         res.sendStatus(500);
     }
+}
+export async function getPosts(req,res){
+    try{
+        const {rows} = await  connection.query(`SELECT u.id,u.name,
+        COUNT(a.url) AS "linksCount",COALESCE(SUM(a."visitCount"),0) 
+        AS "visitCount"
+        FROM users u 
+        LEFT JOIN urls a ON u.id= a."userId" GROUP BY u.id
+        ORDER BY "visitCount" DESC LIMIT 10
+          `)
+          res.status(200).send(rows)
+      }
+      catch(err){
+          res.status(422).send(err.message);
+          return
+      }
 }
