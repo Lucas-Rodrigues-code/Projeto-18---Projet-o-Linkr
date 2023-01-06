@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import  { likePost, unlikePost,mkPost,getPosts } from "../controllers/posts.controller.js";
 import { mkPostValidation } from "../middlewares/posts.validation.middleware.js";
-
+import userRouter from "./user.router.js"
 //importe suas rotas aqui
 const router = Router();
 
