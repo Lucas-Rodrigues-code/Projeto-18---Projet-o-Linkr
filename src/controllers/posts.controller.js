@@ -2,7 +2,6 @@ import connection from "../database/db.js";
 
 export async function viewLikes(req, res){
     const userId = 1;
-    const { postId } = req.params;
 
     const likes = await connection.query(`SELECT likes.*, users.name as username from likes join users on likes."userId" = users.id`);
 
