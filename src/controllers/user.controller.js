@@ -33,6 +33,6 @@ export async function signUp(req, res) {
 
     } catch (err) {
         console.log(err)
-        res.sendStatus(500);
+        res.status(500).send(err.message);
     }
 }
