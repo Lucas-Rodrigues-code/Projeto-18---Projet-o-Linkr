@@ -1,13 +1,20 @@
 import connection from "../database/db.js";
 
+export async function viewLikes(req, res){
+    const userId = 1;
+    const { postId } = req.params;
+
+    const likes = await connection.query(`SELECT likes.*, users.name as username from likes join users on likes."userId" = users.id`);
+
+    res.send(likes.rows);
+}
+
 export async function likePost(req, res){
     const userId = 1;
     const { postId } = req.params
-    console.log(postId)
 
     try {
         const post = await connection.query('SELECT * FROM posts WHERE posts.id = $1 ', [postId]);
-        // console.log(post)
         
         const likeQtd = post.rows[0].likeQtd + 1;
         await connection.query('UPDATE posts SET "likeQtd" = $1 WHERE posts.id = $2', [likeQtd, postId]);
@@ -24,7 +31,7 @@ export async function likePost(req, res){
 }
 
 export async function unlikePost(req, res){
-    const userId = 2;
+    const userId = 1;
     const {postId} = req.params;
     try {
         const post = await connection.query('SELECT * FROM posts WHERE posts.id = $1 ', [postId]);
