@@ -45,7 +45,9 @@ export async function unlikePost(req, res){
 }
 export async function getPosts(req,res){
     try{
-        const {rows} = await  connection.query(``)
+        const {rows} = await  connection.query(`SELECT * FROM posts 
+        JOIN users ON posts."userId" = users.id 
+        ORDER BY posts.id DESC LIMIT (20)`)
           res.status(200).send(rows)
       }
       catch(err){
@@ -55,19 +57,18 @@ export async function getPosts(req,res){
 }
 export async function mkPost(req,res){
     const {link,description} = req.body
-    console.log('RODANDO POST')
     const {authorization} = req.headers
     const token = authorization?.replace("Bearer ","")
     const likeQtd = 0
     try{
         const {rows} = await connection.query("SELECT * FROM sessions WHERE token =$1",[token])
         await connection.query(
-            'INSERT INTO posts ("userId",link,description) VALUES ($1,$2,$3,$4);',
+            'INSERT INTO posts ("userId",link,description,"likeQtd") VALUES ($1,$2,$3,$4);',
              [rows[0].userId, link,description,likeQtd]
            );
-        res.status(201).send(link)
+        res.sendStatus(201)
     }
-    catch{
+    catch(err){
          res.status(422).send(err.message);
         return
     }
