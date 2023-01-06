@@ -39,9 +39,10 @@ CREATE TABLE "likes" (
 ALTER TABLE "trends" ADD CONSTRAINT "trends_fk0" FOREIGN KEY ("postId") REFERENCES "posts"("id");
 
 ALTER TABLE "posts" ADD CONSTRAINT "posts_fk0" FOREIGN KEY ("userId") REFERENCES "users"("id");
-ALTER TABLE "posts" ADD CONSTRAINT "posts_fk1" FOREIGN KEY ("likeId") REFERENCES "likes"("id");
 
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_fk0" FOREIGN KEY ("userId") REFERENCES "users"("id");
 
 ALTER TABLE "likes" ADD CONSTRAINT "likes_fk0" FOREIGN KEY ("userId") REFERENCES "users"("id");
 ALTER TABLE "likes" ADD CONSTRAINT "likes_fk1" FOREIGN KEY ("postId") REFERENCES "posts"("id");
+
+INSERT INTO users (name, email, senha, "pictureUrl") VALUES ('teste','teste1@email.com', 123, '');
