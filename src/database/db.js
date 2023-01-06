@@ -4,12 +4,23 @@ dotenv.config();
 
 const { Pool } = pg;
 
+//const configDatabase = {
+  //connectionString: process.env.DATABASE_URL,
+ // ssl: {
+  //  rejectUnauthorized: false,
+ // },
+//};
+
 const configDatabase = {
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
 };
+ //const configDatabase = {
+  //connectionString: process.env.DATABASE_URL
+ //};
+
 
  const connection = new Pool(configDatabase);
 
