@@ -10,7 +10,7 @@ CREATE TABLE "users" (
 CREATE TABLE "trends" (
 	"id" serial PRIMARY KEY,
 	"trend" TEXT NOT NULL UNIQUE,
-	"postId" INTEGER NOT NULL
+	"postId" SERIAL NOT NULL ;
 );
 
 CREATE TABLE "posts" (
