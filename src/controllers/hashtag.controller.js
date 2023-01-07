@@ -10,7 +10,7 @@ export async function getAllTrends(req, res) {
         }
         res.status(200).send(trends.rows)
     } catch (err) {
-        res.sendStatus(500)
+        res.status(500).send(err.message)
     }
 }
 
@@ -25,7 +25,7 @@ export async function getPostByTrend(req, res) {
         }
         res.status(200).send(trends.rows)
     } catch (err) {
-        res.sendStatus(500)
+        res.status(500).send(err.message)
     }
 }
 
