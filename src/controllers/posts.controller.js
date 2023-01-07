@@ -1,4 +1,5 @@
 import connection from "../database/db.js";
+import urlMetadata from "url-metadata";
 
 export async function likePost(req, res){
     const userId = 1;
