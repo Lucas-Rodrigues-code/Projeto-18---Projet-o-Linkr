@@ -35,7 +35,7 @@ export async function postTrend(req, res) {
 
     try {
 
-        const trends = await connection.query(`insert INTO trends (trend), VALUES ($1)`, [trend])
+        const trends = await connection.query(`insert INTO trends (trend) VALUES ($1)`, [trend])
     }
 
     catch (err) {
