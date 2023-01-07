@@ -1,6 +1,7 @@
 import connection from "../database/db.js";
 
 export async function tokenValidation(req, res, next) {
+    console.log(req.headers)
     const { authorization } = req.headers;
     const token = authorization?.replace("Bearer ", "");
 
