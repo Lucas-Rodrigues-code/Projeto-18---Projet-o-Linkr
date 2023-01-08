@@ -33,7 +33,7 @@ export async function postTrend(req, res) {
 
     const { trend } = req.body
 
-    const ids = await connection.query(`SELECT COUNT(id) FROM posts)`)
+    const ids = await connection.query(`SELECT COUNT(id) FROM posts`)
 
     const postId = ids.rows[0] + 1
 
