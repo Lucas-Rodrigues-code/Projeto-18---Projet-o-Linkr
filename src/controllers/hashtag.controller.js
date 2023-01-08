@@ -36,7 +36,7 @@ export async function postTrend(req, res) {
     const ids = await connection.query(`SELECT COUNT(id) FROM posts`)
 
     const postId = ids.rows[0] + 1
-
+    alert(postId)
     try {
 
         await connection.query(`insert INTO trends (trend, "postId") VALUES ($1, $2)`, [trend, postId])

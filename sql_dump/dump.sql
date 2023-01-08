@@ -19,7 +19,7 @@ ALTER TABLE "sessions" ADD CONSTRAINT "sessions_fk0" FOREIGN KEY ("userId") REFE
 CREATE TABLE "trends" (
 	"id" serial PRIMARY KEY,
 	"trend" TEXT NOT NULL UNIQUE,
-	"postId" SERIAL NOT NULL
+	"postId" integer NOT NULL
 );
 
 CREATE TABLE "posts" (
