@@ -39,7 +39,7 @@ export async function postTrend(req, res) {
 
     try {
 
-        const trends = await connection.query(`insert INTO trends (trend, "postId") VALUES ($1, $2)`, [trend, postId])
+        await connection.query(`insert INTO trends (trend, "postId") VALUES ($1, $2)`, [trend, postId])
         res.sendStatus(200)
     }
 
