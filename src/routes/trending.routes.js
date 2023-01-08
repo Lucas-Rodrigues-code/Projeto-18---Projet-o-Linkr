@@ -6,6 +6,6 @@ const router = Router()
 
 router.get("/hashtag", tokenValidation, getAllTrends)
 router.get("/hashtag/:hashtag", getPostByTrend)
-router.post("/trends", tokenValidation, postTrend)
+router.post("/trends", postTrend)
 
 export default router;
