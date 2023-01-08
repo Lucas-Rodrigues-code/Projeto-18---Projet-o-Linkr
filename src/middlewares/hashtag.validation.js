@@ -15,6 +15,8 @@ export async function tokenValidation(req, res, next) {
         res.status(401).send("Token Authentication failed")
         return
     }
+
+    console.log(userObj.rows[0].userId)
     res.locals.userId = userObj.rows[0].userId;
     next()
 }
