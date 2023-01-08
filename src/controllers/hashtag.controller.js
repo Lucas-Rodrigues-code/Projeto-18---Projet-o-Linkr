@@ -1,14 +1,17 @@
 import connection from "../database/db.js";
 
 export async function getAllTrends(req, res) {
-    const { userId } = res.locals.userId
-
+    /* `SELECT trends.trend AS "hashtag", COUNT(likes."postId") AS "likeNumber" FROM trends JOIN likes ON trends."postId" = likes."postId" GROUP BY "hashtag" ORDER BY "likeNumber";` */
     try {
-        const trends = await connection.query(`SELECT trends.trend AS "hashtag", COUNT(likes."postId") AS "likeNumber" FROM trends JOIN likes ON trends."postId" = likes."postId" GROUP BY "hashtag" ORDER BY "likeNumber";`)
+        const trends = await connection.query(`SELECT trend AS "hashtag" FROM trends LIMIT 10;`)
+
         if (trends.rowCount === 0) {
-            res.status(200).send([])
+            return res.status(200).send([])
         }
-        res.status(200).send(trends.rows)
+
+        const hashtags = trends.rows.map((obj)=> Object.values(obj))
+
+        res.status(200).send(hashtags)
     } catch (err) {
         res.status(500).send(err.message)
     }
@@ -16,12 +19,13 @@ export async function getAllTrends(req, res) {
 
 
 export async function getPostByTrend(req, res) {
-
     try {
-
-        const trends = await connection.query(`SELECT users.name AS "username", posts.link AS "link",  posts.description AS "text" FROM users JOIN posts ON  users.id = posts."userId" JOIN trends ON posts.id = trends."postId" WHERE trends.trend = $1;`, [req.params.trend])
+        const queryHashtag = '#' + req.params.hashtag
+        console.log(queryHashtag)
+        const trends = await connection.query(`SELECT users.name AS "username", posts.link AS "link",  posts.description AS "description" FROM users JOIN posts ON  users.id = posts."userId" JOIN trends ON posts.id = trends."postId" WHERE trends.trend = $1;`, [queryHashtag])
         if (trends.rowCount === 0) {
-            res.status(200).send([])
+            res.status(401).send([])
+            return
         }
         res.status(200).send(trends.rows)
     } catch (err) {
@@ -33,10 +37,10 @@ export async function postTrend(req, res) {
 
     const { trend } = req.body
 
-    const ids = await connection.query(`SELECT COUNT(id) FROM posts`)
+    const ids = await connection.query(`SELECT MAX(ID) FROM posts`)
 
-    const postId = ids.rows[0] + 1
-    alert(postId)
+    const postId = Number(ids.rows[0].max)
+   
     try {
 
         await connection.query(`insert INTO trends (trend, "postId") VALUES ($1, $2)`, [trend, postId])

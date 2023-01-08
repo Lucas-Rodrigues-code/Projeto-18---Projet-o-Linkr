@@ -4,8 +4,8 @@ import { tokenValidation } from "../middlewares/hashtag.validation.js";
 
 const router = Router()
 
-router.get("/hashtag", tokenValidation, getAllTrends)
-router.get("/hashtag/:hashtag", getPostByTrend)
+router.get("/hashtag", getAllTrends)
+router.get("/trends/:hashtag", getPostByTrend)
 router.post("/trends", postTrend)
 
 export default router;

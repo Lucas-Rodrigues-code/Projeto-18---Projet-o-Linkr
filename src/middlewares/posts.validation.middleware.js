@@ -1,7 +1,7 @@
 import connection from "../database/db.js";
 
 export async function mkPostValidation(req,res,next){
-    console.log('passando na validação')
+    
     const {link} = req.body
     const {authorization} = req.headers
     if(!link){
@@ -10,6 +10,7 @@ export async function mkPostValidation(req,res,next){
     }
     if(!authorization?.includes("Bearer")){
         res.sendStatus(401)
+        console.log(' não passando na validação')        
         return
     }
     const token= authorization?.replace("Bearer ","")
@@ -18,6 +19,7 @@ export async function mkPostValidation(req,res,next){
         if(rows.length===0){
             res.sendStatus(401)
             console.log('token invalido')
+            console.log(rows)
             return
         }
         console.log(rows)
