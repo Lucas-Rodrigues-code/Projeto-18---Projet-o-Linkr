@@ -15,7 +15,8 @@ export async function signIn(req, res) {
         } else {
             await connection.query(`UPDATE sessions SET token=$1 WHERE "userId"=$2;`, [token, user.id])
         }
-        res.status(200).send({ token })
+        const imageUser =  (await connection.query(`SELECT "pictureUrl" FROM users WHERE id=$1;`,[user.id])).rows[0].pictureUrl
+        res.status(200).send({ token,imageUser })
 
     } catch (err) {
         res.sendStatus(500);

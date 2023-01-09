@@ -47,7 +47,7 @@ export  async function userValidation(req, res, next) {
     try {
         const userExist = await connection.query("SELECT * FROM users WHERE email=$1;", [user.email]);
         if (userExist.rowCount > 0) {
-            res.status(409).send({ message: "Email já está em uso." });
+            res.status(409).send({ message: "Esse email já está em uso." });
             return;
         }
     } catch (err) {
