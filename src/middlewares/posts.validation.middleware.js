@@ -16,6 +16,7 @@ export async function mkPostValidation(req,res,next){
     const token= authorization?.replace("Bearer ","")
     try{
         const {rows} = await connection.query("SELECT * FROM sessions WHERE token =$1",[token])
+        console.log(rows)
         if(rows.length===0){
             res.sendStatus(401)
             console.log('token invalido')

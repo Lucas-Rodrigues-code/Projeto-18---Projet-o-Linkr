@@ -64,7 +64,12 @@ export async function mkPost(req,res){
     const {link,description} = req.body
     const {authorization} = req.headers
     const token = authorization?.replace("Bearer ","")
-    const postImageData ={ }
+    const postImageData ={ 
+        url:"",
+        title:"",
+        image:"",
+        description:""
+    }
     const likeQtd = 0
     try{
        await urlMetadata(link).then(
@@ -78,7 +83,7 @@ export async function mkPost(req,res){
               console.log(error)
             })
         console.log(postImageData)
-        const {rows} = await connection.query("SELECT * FROM sessions WHERE token =$1",["123abc"])
+        const {rows} = await connection.query("SELECT * FROM sessions WHERE token =$1",[token])
         console.log(token)
         console.log(rows)
         await connection.query(
