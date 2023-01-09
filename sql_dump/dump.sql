@@ -1,9 +1,9 @@
 CREATE TABLE "users" (
 	"id" serial PRIMARY KEY,
-	"name" TEXT NOT NULL UNIQUE,
+	"name" TEXT NOT NULL ,
 	"email" TEXT NOT NULL UNIQUE,
 	"senha" TEXT NOT NULL,
-	"pictureUrl" TEXT NOT NULL UNIQUE,
+	"pictureUrl" TEXT NOT NULL ,
 	"createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
@@ -42,9 +42,10 @@ CREATE TABLE "postImage"
 (
    "id" serial PRIMARY KEY,
     "postId" integer NOT NULL,
-    url text COLLATE pg_catalog."default" NOT NULL,
+    "url" text COLLATE pg_catalog."default" NOT NULL,
     "imageDescription" text COLLATE pg_catalog."default" NOT NULL,
     "imageUrl" text COLLATE pg_catalog."default" NOT NULL,
+	"title" text NOT NULL,
     "createdAt" timestamp without time zone NOT NULL DEFAULT now()
 );
 

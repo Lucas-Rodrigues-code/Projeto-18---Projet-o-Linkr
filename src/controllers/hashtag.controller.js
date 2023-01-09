@@ -22,7 +22,7 @@ export async function getPostByTrend(req, res) {
     try {
         const queryHashtag = '#' + req.params.hashtag
         console.log(queryHashtag)
-        const trends = await connection.query(`SELECT users.name AS "username", posts.link AS "link",  posts.description AS "description" FROM users JOIN posts ON  users.id = posts."userId" JOIN trends ON posts.id = trends."postId" WHERE trends.trend = $1;`, [queryHashtag])
+        const trends = await connection.query(`SELECT users.name AS "username", posts.link AS "link",  posts.description AS "description", "postImage".* FROM users JOIN posts ON  users.id = posts."userId" JOIN trends ON posts.id = trends."postId" JOIN "postImage" ON posts.id = "postImage"."postId" WHERE trends.trend = $1;`, [queryHashtag])
         if (trends.rowCount === 0) {
             res.status(401).send([])
             return
