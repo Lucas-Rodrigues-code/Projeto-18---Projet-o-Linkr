@@ -4,7 +4,7 @@ export async function userLikes(req, res) {
     const userId = 3
 
     try {
-        const { rows } = await connection.query('SELECT likes.id FROM likes JOIN users ON likes."userId" = users.id where users.id = $1', [userId]);
+        const { rows } = await connection.query('SELECT likes.id, likes."postId", users.id as "userId", users.name as username FROM likes JOIN users ON likes."userId" = users.id where users.id = $1 order by likes.id desc', [userId]);
         res.send(rows)
     } catch (error) {
         console.log(error);
