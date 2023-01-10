@@ -46,7 +46,7 @@ export async function unlikePost(req, res){
 }
 export async function getPosts(req,res){
     try{
-        const {rows} = await  connection.query(`SELECT posts.link,posts.description,
+        const {rows} = await  connection.query(`SELECT posts.link,posts.description,posts.id as "postId",
         "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
         users.name,users."pictureUrl" as "usersPhoto",users.id as "userId", posts."likeQtd"
         FROM posts 
@@ -107,7 +107,7 @@ export async function getPostsByUserId(req,res){
     const {id} = req.params
     console.log('ENVIANDO POSTS DE UM USUARIO')
     try{
-        const {rows} = await  connection.query(`SELECT posts.link,posts.description,
+        const {rows} = await  connection.query(`SELECT posts.link,posts.description,posts.id as "postId",
         "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
         users.name,users.id as "userId" , users."pictureUrl" as "usersPhoto", posts."likeQtd"
         FROM posts 
