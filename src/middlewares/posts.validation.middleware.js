@@ -37,7 +37,7 @@ export async function tokenValidation(req, res, next) {
     const token = authorization?.replace("Bearer ", "");
 
     if (token === undefined) {
-        res.status(401).send(`missing token ${ req.headers}`)
+        res.status(401).send(`missing token ${ token}`)
         return
     }
 
