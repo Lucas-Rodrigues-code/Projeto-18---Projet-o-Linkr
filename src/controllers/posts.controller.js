@@ -2,9 +2,8 @@ import connection from "../database/db.js";
 import urlMetadata from "url-metadata";
 
 export async function likePost(req, res){
-    const userId = 1;
+    const userId = res.locals.userId;
     const { postId } = req.params
-    console.log(postId)
 
     try {
         const post = await connection.query('SELECT * FROM posts WHERE posts.id = $1 ', [postId]);
@@ -25,7 +24,7 @@ export async function likePost(req, res){
 }
 
 export async function unlikePost(req, res){
-    const userId = 2;
+    const userId = res.locals.userId;
     const {postId} = req.params;
     try {
         const post = await connection.query('SELECT * FROM posts WHERE posts.id = $1 ', [postId]);
@@ -33,7 +32,7 @@ export async function unlikePost(req, res){
         const likeQtd = post.rows[0].likeQtd - 1;
         await connection.query('UPDATE posts SET "likeQtd" = $1 WHERE posts.id = $2', [likeQtd, postId]);
 
-        await connection.query('delete from likes where likes."userId" = $1 and likes."postId" = $2', [userId, postId]); 
+        await connection.query('DELETE from likes where likes."userId" = $1 and likes."postId" = $2', [userId, postId]); 
         
 
         const likes = await connection.query(`SELECT likes.*, users.name as username from likes join users on likes."userId" = users.id  WHERE likes."postId" = $1`, [postId]);
