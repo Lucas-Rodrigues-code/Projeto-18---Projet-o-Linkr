@@ -45,11 +45,10 @@ export async function unlikePost(req, res){
     }
 }
 export async function getPosts(req,res){
-    console.log('ENVIANDO POSTS')
     try{
         const {rows} = await  connection.query(`SELECT posts.link,posts.description,
         "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
-        users.name,users."pictureUrl" as "usersPhoto"
+        users.name,users."pictureUrl" as "usersPhoto",users.id as "userId", posts."likeQtd"
         FROM posts 
         INNER JOIN "postImage" ON "postImage"."postId"=posts.id
         INNER JOIN users ON users.id=posts."userId" ORDER BY posts.id DESC LIMIT(20)
@@ -103,4 +102,22 @@ export async function mkPost(req,res){
          res.status(422).send(err.message);
         return
     }
+}
+export async function getPostsByUserId(req,res){
+    const {id} = req.params
+    console.log('ENVIANDO POSTS DE UM USUARIO')
+    try{
+        const {rows} = await  connection.query(`SELECT posts.link,posts.description,
+        "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
+        users.name,users.id as "userId" , users."pictureUrl" as "usersPhoto", posts."likeQtd"
+        FROM posts 
+        INNER JOIN "postImage" ON "postImage"."postId"=posts.id
+        INNER JOIN users ON users.id=posts."userId" WHERE users.id = $1 ORDER BY posts.id DESC LIMIT(20)
+        `,[id])
+          res.status(200).send(rows)
+      }
+      catch(err){
+          res.status(422).send(err.message);
+          return
+      }
 }
