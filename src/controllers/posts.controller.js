@@ -45,12 +45,13 @@ export async function unlikePost(req, res){
     }
 }
 export async function getPosts(req,res){
+    console.log('ENVIANDO POSTS')
     try{
         const {rows} = await  connection.query(`SELECT posts.link,posts.description,
         "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
         users.name,users."pictureUrl" as "usersPhoto"
         FROM posts 
-        INNER JOIN "postImage" ON "postImage"."url"=posts.link
+        INNER JOIN "postImage" ON "postImage"."postId"=posts.id
         INNER JOIN users ON users.id=posts."userId" ORDER BY posts.id DESC LIMIT(20)
         `)
           res.status(200).send(rows)
