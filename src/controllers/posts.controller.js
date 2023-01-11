@@ -19,7 +19,7 @@ export async function likePost(req, res){
         res.send(likes.rows)
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error.message);
     }
 }
 
@@ -40,7 +40,7 @@ export async function unlikePost(req, res){
         res.send(likes.rows)
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error.message);
     }
 }
 export async function getPosts(req,res){
@@ -59,6 +59,18 @@ export async function getPosts(req,res){
           return
       }
 }
+
+export async function getPostsNumber(req, res) {
+    try {
+        const { rows } = await connection.query(`SELECT  COUNT(*) FROM posts`)
+        res.status(200).send(rows[0])
+    }
+    catch (err) {
+        res.status(422).send(err.message);
+        return
+    }
+}
+
 export async function mkPost(req,res){
     const {link,description} = req.body
     const {authorization} = req.headers
