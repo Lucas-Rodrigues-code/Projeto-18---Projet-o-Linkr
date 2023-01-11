@@ -3,7 +3,7 @@ import connection from "../database/db.js";
 export async function getAllTrends(req, res) {
     /* `SELECT trends.trend AS "hashtag", COUNT(likes."postId") AS "likeNumber" FROM trends JOIN likes ON trends."postId" = likes."postId" GROUP BY "hashtag" ORDER BY "likeNumber";` */
     try {
-        const trends = await connection.query(`SELECT trend AS "hashtag" FROM trends LIMIT 10;`)
+        const trends = await connection.query(`SELECT trend AS "hashtag" FROM trends GROUP BY hashtag ORDER BY COUNT(trend) DESC LIMIT 10;`)
 
         if (trends.rowCount === 0) {
             return res.status(200).send([])
