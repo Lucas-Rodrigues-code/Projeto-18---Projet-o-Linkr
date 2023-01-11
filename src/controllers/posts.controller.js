@@ -19,7 +19,7 @@ export async function likePost(req, res){
         res.send(likes.rows)
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error);
     }
 }
 
@@ -40,7 +40,7 @@ export async function unlikePost(req, res){
         res.send(likes.rows)
     } catch (error) {
         console.log(error);
-        res.sendStatus(500);
+        res.status(500).send(error);
     }
 }
 export async function getPosts(req,res){
