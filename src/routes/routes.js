@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { likePost, unlikePost, mkPost, getPosts, getPostsByUserId } from "../controllers/posts.controller.js";
+import { likePost, unlikePost, mkPost, getPosts, getPostsByUserId, getPostsNumber } from "../controllers/posts.controller.js";
 import { mkPostValidation, tokenValidation } from "../middlewares/posts.validation.middleware.js";
 import userRouter from "./user.router.js"
 //importe suas rotas aqui
