@@ -11,7 +11,7 @@ router.use(userRouter);
 router.post("/timeline", mkPostValidation, mkPost)
 router.get("/timeline", getPosts)
 router.get("/timeline/:id", getPostsByUserId)
-router.post("/likes/:postId", likePost);
-router.delete("/likes/:postId", unlikePost);
+router.post("/likes/:postId", tokenValidation, likePost);
+router.delete("/likes/:postId", tokenValidation, unlikePost);
 router.get("/total", getPostsNumber)
 export default router;
