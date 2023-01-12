@@ -50,7 +50,7 @@ export async function getPosts(req,res){
         users.name,users."pictureUrl" as "usersPhoto",users.id as "userId", posts."likeQtd"
         FROM posts 
         INNER JOIN "postImage" ON "postImage"."postId"=posts.id
-        INNER JOIN users ON users.id=posts."userId" ORDER BY posts.id DESC LIMIT(20)
+        INNER JOIN users ON users.id=posts."userId" ORDER BY posts.id DESC LIMIT(10)
         `)
           res.status(200).send(rows)
       }
