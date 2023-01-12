@@ -43,15 +43,16 @@ export async function unlikePost(req, res){
         res.status(500).send(error.message);
     }
 }
-export async function getPosts(req,res){
+export async function getPosts(req, res) {
+
     try{
         const {rows} = await  connection.query(`SELECT posts.link,posts.description,posts.id as "postId",
         "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
         users.name,users."pictureUrl" as "usersPhoto",users.id as "userId", posts."likeQtd"
         FROM posts 
         INNER JOIN "postImage" ON "postImage"."postId"=posts.id
-        INNER JOIN users ON users.id=posts."userId" ORDER BY posts.id DESC LIMIT(10)
-        `)
+        INNER JOIN users ON users.id=posts."userId" ORDER BY posts.id DESC LIMIT $1
+        `, [req.query.limit * 10])
           res.status(200).send(rows)
       }
       catch(err){
