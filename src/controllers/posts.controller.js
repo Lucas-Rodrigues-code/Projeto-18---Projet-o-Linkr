@@ -7,7 +7,7 @@ export async function likePost(req, res) {
 
     try {
         const post = await connection.query('SELECT * FROM posts WHERE posts.id = $1 ', [postId]);
-        // console.log(post)
+        
 
         const likeQtd = post.rows[0].likeQtd + 1;
         await connection.query('UPDATE posts SET "likeQtd" = $1 WHERE posts.id = $2', [likeQtd, postId]);
@@ -44,12 +44,13 @@ export async function unlikePost(req, res) {
     }
 }
 export async function getPosts(req, res) {
-
-    const limit = 10
+    console.log(req.query.limit)
+    let limit = 10
 
     if (req.query.limit) {
         limit = 10 * req.query.limit
     }
+    
     try {
         const { rows } = await connection.query(`SELECT posts.link,posts.description,posts.id as "postId",
         "postImage"."imageDescription","postImage"."imageUrl","postImage"."title",
